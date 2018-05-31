@@ -2,7 +2,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 
-public class WallTile extends JLabel {
+public class WallTile extends BoardTile {
     private ImageIcon [] pictures;
 public WallTile (int level){
     super();

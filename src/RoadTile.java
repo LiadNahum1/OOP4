@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class RoadTile extends JLabel {
+public class RoadTile extends BoardTile {
     private boolean isEaten;
     public RoadTile() {
         super();

@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class GateTile extends JLabel {
+public class GateTile extends BoardTile {
     public GateTile (){
         super();
         this.setIcon(new ImageIcon("pictures/boards/gate.png"));
