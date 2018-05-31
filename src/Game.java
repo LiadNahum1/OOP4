@@ -40,6 +40,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 	}
 
 	public void initializeBoardTilesS() {
+		
 		this.boardTilesS = new String[][] 
 			 {{"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w", "w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
 		      {"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
