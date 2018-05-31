@@ -12,7 +12,7 @@ public void move() {
 	
 }
 
-public void draw(Game game, Graphics g) {
+public void draw(Board game, Graphics g) {
 	// TODO Auto-generated method stub
 	
 }

@@ -1,5 +1,5 @@
 
-public abstract class Ghost implements Visitor {
+public abstract class Ghost  implements Visitor {
 	public void collide(Pacman pacman) {
 		pacman.impact(this);
 	}
