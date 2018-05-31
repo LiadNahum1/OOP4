@@ -38,5 +38,5 @@ public class AngryPacman extends Pacman {
 	public Image draw(Game game, Graphics g) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}  
 }

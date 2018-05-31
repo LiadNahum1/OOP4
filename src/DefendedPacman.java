@@ -39,4 +39,4 @@ public class DefendedPacman extends Pacman {
 		// TODO Auto-generated method stub
 		return null;
 	}
-}
+}  

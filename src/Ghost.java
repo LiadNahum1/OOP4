@@ -8,3 +8,4 @@ public abstract class Ghost implements Visitor {
 	public abstract void visit(AngryPacman pacman);
 	
 }
+ 

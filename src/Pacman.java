@@ -18,4 +18,4 @@ public abstract class Pacman implements Visited{
 	public abstract ImageIcon getCurrentIcon(); 
 	public abstract Pair getCurrentPosition();
 	public abstract void manageMovement(KeyEvent e);
-}
+}  
