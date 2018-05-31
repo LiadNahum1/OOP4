@@ -1,3 +1,7 @@
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+
 import javax.swing.ImageIcon;
 
 public class AngryPacman extends Pacman {
@@ -15,4 +19,24 @@ public class AngryPacman extends Pacman {
 	public void impact(Visitor v) {
 		v.visit(this);
 		}
+	@Override
+	public ImageIcon getCurrentIcon() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Pair getCurrentPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void manageMovement(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Image draw(Game game, Graphics g) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
