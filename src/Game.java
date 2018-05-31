@@ -45,7 +45,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		for(int i=0;i<32;i++){
 			for(int j=0;j<32;j++){
 				initializeBoardTile(i,j);
-				this.getContentPane().add(boardTiles[i][0]);
+				this.getContentPane().add(boardTiles[i][j]);
 			}
 		}
 	}
@@ -53,6 +53,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
 
 		private void initializeBoardTile (int x,int y) {
+			System.out.println(boardTilesS.length);
 			if(boardTilesS [x][y] == "w")
 				boardTiles[x][y] =new WallTile(this.level);
 			if(boardTilesS [x][y] == "r")
@@ -61,6 +62,44 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 				boardTiles [x][y] = new GateTile();
 		}
 
+				public static void main(String[]args) {
+			new Game(1);
+		}
+
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource().equals(this.timer)) {
+				if(!this.start)
+					this.pacman.move();
+				repaint();
+			}
+		}
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+				this.timer.start();
+			}
+			else {
+				this.pacman.manageMovement(e);
+				repaint();
+			}
+
+		}
+
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
 		public void initializeBoardTilesS() {
 			this.boardTilesS = new String[][] 
 					{{"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w", "w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
@@ -147,44 +186,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 		 */
-		public static void main(String[]args) {
-			new Game(1);
-		}
-
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(e.getSource().equals(this.timer)) {
-				if(!this.start)
-					this.pacman.move();
-				repaint();
-			}
-		}
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-				this.timer.start();
-			}
-			else {
-				this.pacman.manageMovement(e);
-				repaint();
-			}
-
-		}
-
-
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-
-		@Override
-		public void keyTyped(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
 
 
 
