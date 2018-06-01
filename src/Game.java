@@ -25,8 +25,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 	private int level; 
 	private Pacman pacman;
 	private boolean start; 
-	private JPanel j; 
-
 
 	public Game(int level) {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -39,7 +37,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		if(level == 1) {
 			this.pacman = new NicePacman(new Pair(400,400)); 
 		}
-		this.setBackground(Color.black);
 		initializeBoardTilesS();
 		initializeBoard();
 		this.addKeyListener(this);
