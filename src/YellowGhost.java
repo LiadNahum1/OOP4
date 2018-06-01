@@ -39,10 +39,6 @@ public class YellowGhost extends Ghost{
 		
 	}
 
-	@Override
-	public void move(String[][] dirs) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

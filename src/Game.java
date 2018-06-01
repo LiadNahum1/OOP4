@@ -34,7 +34,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.level = level; 
 		this.setBackground(Color.BLACK);
-		this.setLayout(new GridLayout(32,32));
+		//this.setLayout(new GridLayout(32,32));
 		this.setSize(800,800);
 		this.start = true; 
 		this.timer = new Timer(500, this);
@@ -60,7 +60,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 	}
 
 	public static void main(String[]args) {
-		new Game(3);
+		new Game(1);
 	}
 
 

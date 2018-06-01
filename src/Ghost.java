@@ -11,25 +11,35 @@ public abstract class Ghost  implements Visitor {
 	public void collide(Pacman pacman) {
 		pacman.impact(this);
 	}
-	public void move(String board [][]) {
-		Vector <Integer> posibleDirs = getPosDirs(board);
-
+	public Pair move(String board [][]) {
+		Vector <Pair> possibleDirs = getPosDirs(board);
+		if(possibleDirs.size()==1) {
+			return possibleDirs.get(0);
+		}
+		else {
+	//	int	i = calculateMovesToCatch(currentPosition,possibleDirs);
+		}
+	return null;	
 
 	}
 
-	private Vector<Integer> getPosDirs(String[][] board) {
-		Vector <Integer> posibleDirs = new Vector <>();
+	
+			
+			
+	
+	private Vector<Pair> getPosDirs(String[][] board) {
+		Vector <Pair> possibleDirs = new Vector <>();
 		int curX = currentPosition.getX()/25;
 		int curY = currentPosition.getX()/25;
 		if(board[curY+1][curX]!="w"& curDir!=1) //can move up
-			posibleDirs.add(0);
+			possibleDirs.add(new Pair(curX,curY+1));
 		if(board[curY-1][curX]!="w"& curDir!=0)//can move down
-			posibleDirs.add(1);
+			possibleDirs.add(new Pair(curX,curY-1));
 		if(board[curY][curX+1]!="w"& curDir!=2)//can move right
-			posibleDirs.add(3);
+			possibleDirs.add(new Pair(curX+1,curY));
 		if(board[curY][curX-1]!="w"& curDir!=3)//can move left
-			posibleDirs.add(2);
-		return posibleDirs;
+			possibleDirs.add(new Pair(curX-1,curY));
+		return possibleDirs;
 	}
 	public abstract void visit(NicePacman pacman);
 	public abstract void visit(DefendedPacman pacman);
