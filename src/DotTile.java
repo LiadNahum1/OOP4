@@ -1,7 +1,7 @@
 import javax.swing.ImageIcon;
 
 public class DotTile extends BoardTile {
-	 private boolean isEaten;
+	private boolean isEaten;
 	    public DotTile() {
 	        super();
 	        

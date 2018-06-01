@@ -1,9 +1,12 @@
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 
 public class WallTile extends BoardTile {
-    private ImageIcon [] pictures;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ImageIcon [] pictures;
 public WallTile (int level){
     super();
     inisializePictures();

@@ -16,16 +16,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
+//for liad: checkout my implimant of ghost movment and position i recomened that we will try to understand each other code so there wont be collitions and messy work :) ,<3
 public class Game extends JFrame implements ActionListener, KeyListener {
-	private BoardTile [][] boardTiles;
 	private String [][] boardTilesS; 
-	private Vector [][] pDirection; //possible directions
+	private Vector <String> [][] pDirection; //possible directions
+	private Image [] walls;
+	private Image [] roads;
+	private Image 
+	gate;
 	private Timer timer;
 	private int level; 
 	private Pacman pacman;
 	private boolean start; 
-	private JPanel j; 
 
 
 	public Game(int level) {
@@ -41,125 +43,124 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		}
 		this.setBackground(Color.black);
 		initializeBoardTilesS();
-		initializeBoard();
+		initializeBoardTilesPic();
+		repaint();
 		this.addKeyListener(this);
 		this.setVisible(true);
 	}
-	private void initializeBoard() {
-		this.boardTiles = new BoardTile [32][32];  
-		for(int i=0;i<32;i++){
-			for(int j=0;j<32;j++){
-				initializeBoardTile(i,j);
-				Container cp = this.getContentPane();
-				cp.add(boardTiles[i][j]);
-			}
-		}
+	private void initializeBoardTilesPic() {
+		walls = new Image [3];
+		roads = new Image[5];
+		this.walls[0] =  new ImageIcon("pictures/boards/level1wall.png").getImage();
+		this.walls[1] = new ImageIcon("pictures/boards/level2wall.png").getImage();
+		this.walls[2] = new ImageIcon("pictures/boards/level3wall.png").getImage();
+		this.roads[0] =new ImageIcon("pictures/boards/Road.png").getImage();
+		this.roads[1] = new ImageIcon("pictures/boards/energy.png").getImage();
+		gate = new ImageIcon("pictures/boards/gate.png").getImage();
+	}
+
+	public static void main(String[]args) {
+		new Game(3);
 	}
 
 
-
-		private void initializeBoardTile (int x,int y) {
-			System.out.println(boardTilesS.length);
-			if(boardTilesS [x][y] == "w")
-				boardTiles[x][y] =new WallTile(this.level);
-			if(boardTilesS [x][y] == "r")
-				boardTiles[x][y] =new RoadTile();
-			 if(boardTilesS [x][y] == "d" )
-				 boardTiles[x][y] = new DotTile();
-			if(boardTilesS[x][y] == "g")
-				boardTiles [x][y] = new GateTile();
-			
-		}
-
-				public static void main(String[]args) {
-			new Game(1);
-		}
-
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(e.getSource().equals(this.timer)) {
-				if(!this.start)
-					this.pacman.move();
-			//	repaint();
-			}
-		}
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-				this.timer.start();
-			}
-			else {
-				this.pacman.manageMovement(e);
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(this.timer)) {
+			if(!this.start)
+				this.pacman.move();
 				//repaint();
-			}
-
 		}
-
-
-		@Override
-		public void keyReleased(KeyEvent argr) {
-			// TODO Auto-generated method stub
-
-		}
-
-
-		@Override
-		public void keyTyped(KeyEvent argr) {
-			// TODO Auto-generated method stub
-
-		}
-		public void initializeBoardTilesS() {
-			this.boardTilesS = new String[][] 
-					{{"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w", "w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
-				{"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
-				{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
-				{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
-				{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
-				{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
-				{"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
-				{"w", "d","w","w","w","w","d","w","d","w","w","w","w","w","w","w","w","w","w","w","w","w","w","d","w","d","w","w","w","w","d","w"},
-				{"w", "d","w","w","w","w","d","w","d","w","w","w","w","w","w","w","w","w","w","w","w","w","w","d","w","d","w","w","w","w","d","w"},
-				{"w", "d","d","d","d","d","d","w","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","w","d","d","d","d","d","d","w"},//
-				{"w", "w","w","w","w","w","d","w","w","w","w","w","w","w","r","w","w","r","w","w","w","w","w","w","w","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","w","w","w","w","w","w","w","r","w","w","r","w","w","w","w","w","w","w","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","w","r","r","r","r","r","r","r","w","w","r","r","r","r","r","r","r","w","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","w","r","w","w","w","w","w","r","w","w","r","w","w","w","w","w","r","w","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","w","r","w","w","w","r","r","r","r","r","r","r","r","w","w","w","r","w","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","r","r","w","w","w","r","w","w","g","g","w","w","r","w","w","w","r","r","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","w","r","w","w","w","r","w","w","w","w","w","w","r","w","w","w","r","w","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","w","r","r","r","r","r","r","r","r","r","r","r","r","r","r","r","r","w","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","w","r","w","w","w","w","w","w","w","w","w","w","w","w","w","w","r","w","d","w","w","w","w","w","w"},
-				{"w", "w","w","w","w","w","d","w","r","w","w","w","w","w","w","w","w","w","w","w","w","w","w","r","w","d","w","w","w","w","w","w"},
-				{"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
-				{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
-				{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
-				{"w", "d","d","d","w","w","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w","w","d","d","d","w"},
-				{"w", "w","w","d","w","w","d","w","d","w","w","w","w","w","w","w","w","w","w","w","w","w","w","d","w","d","w","w","d","w","w","w"},
-				{"w", "d","d","d","w","w","d","w","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","w","d","w","w","d","d","d","w"},
-				{"w", "w","w","d","w","w","d","w","d","w","w","w","w","w","d","w","w","d","w","w","w","w","w","d","w","d","w","w","d","w","w","w"},
-				{"w", "d","d","d","d","d","d","w","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","w","d","d","d","d","d","d","w"},
-				{"w", "d","w","w","w","w","w","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","w","w","w","w","w","d","w"},
-				{"w", "d","w","w","w","w","w","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","w","w","w","w","w","d","w"},
-				{"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
-				{"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"}};
-
-		}
-		
-	
-	/*public void paint(Graphics g){
-		if(this.start) {
-			//initializeBoardTile(g);
-			start = false;
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			this.timer.start();
 		}
 		else {
-			Image im = this.pacman.draw(this, g);
-			Pair position = this.pacman.getCurrentPosition();
-			g.drawImage(im,position.getX(), position.getY(), this);
+			this.pacman.manageMovement(e);
+			//repaint();
 		}
-	}*/
-		 
-
-
 
 	}
+
+
+	@Override
+	public void keyReleased(KeyEvent argr) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent argr) {
+		// TODO Auto-generated method stub
+
+	}
+	public void paint(Graphics g){
+	if(this.start) {
+      drawBoard(g);
+		start = false;
+	}
+	else {
+		Image im = this.pacman.draw(this, g);
+		Pair position = this.pacman.getCurrentPosition();
+		g.drawImage(im,position.getX(), position.getY(), this);
+	}
+}
+
+	private void drawBoard(Graphics g) {
+	for(int y=0; y<32;y++) {
+		for(int x=0; x<32;x++) {
+			if(boardTilesS [y][x] == "w") {
+				g.drawImage(walls[level-1],x*25,(y+1)*25,this);
+			}
+				else if(boardTilesS [y][x] == "r")
+					g.drawImage(roads[0],x*25,(y+1)*25,this);
+				else if(boardTilesS [y][x] == "d" )
+					g.drawImage(roads[1],x*25,(y+1)*25,this);
+				else if(boardTilesS[y][x] == "g")
+					g.drawImage(gate,x*25,(y+1)*25,this);	
+			
+			}
+		}	
+	}
+	
+	public void initializeBoardTilesS() {
+		this.boardTilesS = new String[][] 
+				{{"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w", "w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"},
+			{"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
+			{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
+			{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
+			{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
+			{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
+			{"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
+			{"w", "d","w","w","w","w","d","w","d","w","w","w","w","w","w","w","w","w","w","w","w","w","w","d","w","d","w","w","w","w","d","w"},
+			{"w", "d","w","w","w","w","d","w","d","w","w","w","w","w","w","w","w","w","w","w","w","w","w","d","w","d","w","w","w","w","d","w"},
+			{"w", "d","d","d","d","d","d","w","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","w","d","d","d","d","d","d","w"},
+			{"w", "w","w","w","w","w","d","w","w","w","w","w","w","w","r","w","w","r","w","w","w","w","w","w","w","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","w","w","w","w","w","w","w","r","w","w","r","w","w","w","w","w","w","w","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","w","r","r","r","r","r","r","r","w","w","r","r","r","r","r","r","r","w","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","w","r","w","w","w","w","w","r","g","g","r","w","w","w","w","w","r","w","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","w","r","w","w","w","r","r","r","r","r","r","r","r","w","w","w","r","w","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","r","r","w","w","w","r","w","w","r","r","w","w","r","w","w","w","r","r","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","w","r","w","w","w","r","w","w","w","w","w","w","r","w","w","w","r","w","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","w","r","r","r","r","r","r","r","r","r","r","r","r","r","r","r","r","w","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","w","r","w","w","w","w","w","w","w","w","w","w","w","w","w","w","r","w","d","w","w","w","w","w","w"},
+			{"w", "w","w","w","w","w","d","w","r","w","w","w","w","w","w","w","w","w","w","w","w","w","w","r","w","d","w","w","w","w","w","w"},
+			{"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
+			{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
+			{"w", "d","w","w","w","w","d","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","d","w","w","w","w","d","w"},
+			{"w", "d","d","d","w","w","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w","w","d","d","d","w"},
+			{"w", "w","w","d","w","w","d","w","d","w","w","w","w","w","w","w","w","w","w","w","w","w","w","d","w","d","w","w","d","w","w","w"},
+			{"w", "d","d","d","w","w","d","w","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","w","d","w","w","d","d","d","w"},
+			{"w", "w","w","d","w","w","d","w","d","w","w","w","w","w","d","w","w","d","w","w","w","w","w","d","w","d","w","w","d","w","w","w"},
+			{"w", "d","d","d","d","d","d","w","d","d","d","d","d","d","d","w","w","d","d","d","d","d","d","d","w","d","d","d","d","d","d","w"},
+			{"w", "d","w","w","w","w","w","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","w","w","w","w","w","d","w"},
+			{"w", "d","w","w","w","w","w","w","w","w","w","w","w","w","d","w","w","d","w","w","w","w","w","w","w","w","w","w","w","w","d","w"},
+			{"w", "d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","w"},
+			{"w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w"}};
+	}
+	
+
+}

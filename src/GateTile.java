@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class GateTile extends BoardTile {
-    public GateTile (){
+	public GateTile (){
         super();
         this.setIcon(new ImageIcon("pictures/boards/gate.png"));
     }
