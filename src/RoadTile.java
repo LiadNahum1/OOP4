@@ -1,21 +1,13 @@
+import java.awt.Color;
+
 import javax.swing.*;
 
 public class RoadTile extends BoardTile {
-    private boolean isEaten;
     public RoadTile() {
         super();
-        this.setIcon(new ImageIcon("pictures/boards/energy.png"));
+        
+        this.setIcon(new ImageIcon("pictures/boards/Road.png"));
     }
 
-    public void setEaten() {
-        if (!isEaten) {
-            this.setIcon(new ImageIcon("pictures/boards/energy.png"));
-            this.isEaten = true;
-        }
-    }
-
-    public boolean isMovable(Object Obj){
-        return false;
-    }
 }
 
