@@ -1,4 +1,7 @@
+package Tiles;
 import javax.swing.*;
+
+import GamePack.*;
 
 public class GateTile extends BoardTile {
 	public GateTile (){

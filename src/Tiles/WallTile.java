@@ -1,3 +1,4 @@
+package Tiles;
 import javax.swing.ImageIcon;
 
 

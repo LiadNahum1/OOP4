@@ -1,3 +1,4 @@
+package GamePack;
 
 /*The class defines a pair */
 public class Pair {

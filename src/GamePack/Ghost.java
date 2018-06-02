@@ -1,3 +1,4 @@
+package GamePack;
 import java.util.Vector;
 
 public abstract class Ghost  implements Visitor {

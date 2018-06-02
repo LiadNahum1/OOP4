@@ -1,3 +1,4 @@
+package GamePack;
 
 public interface Visitor {
 	void visit(NicePacman pacman);

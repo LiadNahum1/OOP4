@@ -1,3 +1,4 @@
+package GamePack;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
@@ -7,19 +8,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import FoodObjects.*;
+import Tiles.BoardTile;
+import Tiles.GateTile;
+import Tiles.RoadTile;
+import Tiles.WallTile;
+
 public class Game extends JFrame implements ActionListener, KeyListener {
 	private BoardTile [][] boardTiles;
 	private String [][] boardTilesS; 
-	private Timer timer;
+	private PacTimer timer;
 	private Vector<Pair> [][] neighbors;
 	private int level; 
 	private Pacman pacman;
 	private boolean start; 
+	private Vector<Food> fruits; 
+	private RoadTile fruitsTile; 
 
 
 	public Game(int level) {
@@ -29,15 +39,28 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		this.setLayout(new GridLayout(32,32));
 		this.setSize(800,800);
 		this.start = true; 
-		this.timer = new Timer(500, this);
+		this.timer = new PacTimer(this);
 		if(level == 1) {
 			this.pacman = new NicePacman(new Pair(400,400)); 
 		}
+		this.fruitsTile = new RoadTile(null);
+		initializeFruits();
 		initializeBoardTilesS();
 		initializeBoard();
 		inisializeNeighborsMat();
 		this.addKeyListener(this);
 		this.setVisible(true);
+	}
+
+	public void initializeFruits() {
+		this.fruits = new Vector<>();
+		//for level one
+		for(int i=0; i< 2; i = i+1) {
+			this.fruits.add(new PineApple());
+		}
+		for(int i=0; i< 2; i = i+1) {
+			this.fruits.add(new Apple());
+		}
 	}
 	@SuppressWarnings("unchecked")
 	private void inisializeNeighborsMat() {
@@ -75,15 +98,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 
-
-
 	private void initializeBoardTile (int x,int y) {
 		if(boardTilesS [x][y] == "w")
 			boardTiles[x][y] =new WallTile(this.level);
 		if(boardTilesS [x][y] == "d")
-			boardTiles[x][y] =new RoadTile(false);
+			boardTiles[x][y] =new RoadTile(new RegDot()); //regDot
 		if(boardTilesS [x][y] == "0")
-			boardTiles[x][y] =new RoadTile(true);
+			boardTiles[x][y] =new RoadTile(null); //emptyTile
 		if(boardTilesS[x][y] == "g")
 			boardTiles [x][y] = new GateTile();
 	}
@@ -92,15 +113,54 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		new Game(1);
 	}
 
+	public void drawFruits() {
+		Random rand = new Random();
+		int i =0;
+		int j=0;
+		BoardTile b = this.boardTiles[i][j];
+		while(!(b instanceof RoadTile) || ((RoadTile) b).getIsSomethingOn()) {
+			i = rand.nextInt(32);
+			j = rand.nextInt(32);
+			b = this.boardTiles[i][j];
+		}
+		if(b instanceof RoadTile) {
+			((RoadTile) b).setFood(this.fruits.remove(0));
+			this.fruitsTile= (RoadTile)b;
+		}
+	}
+	private void dimFruit() {
+		if(this.fruitsTile.getIsSomethingOn()) {
+			this.fruitsTile.dimElement();
+		}
+
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(this.timer)) {
-			if(!this.start)
-				this.pacman.move();
+		if(e.getSource().equals(this.timer.getPacmanTimer())) {
+			this.pacman.move();
 			repaint();
+			
+		}
+		if(e.getSource().equals(this.timer.getFruitTimer())) {
+			if(this.timer.getNumTicksFruit() == 0) {
+				
+				if(this.fruits.isEmpty()) {
+					this.timer.getFruitTimer().stop();
+				}
+				else
+					drawFruits();
+			}
+			if(this.timer.getNumTicksFruit() >= 4 & this.timer.getNumTicksFruit() < 10) { //dim
+				dimFruit();
+			}
+			if(this.timer.getNumTicksFruit() == 10) {//disappear
+				this.fruitsTile.setFood(null);
+			}
 		}
 	}
+
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -171,20 +231,4 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
 }
 
-/*	private void drawBoard(Graphics g) {
-	for(int y=0; y<32;y++) {
-		for(int x=0; x<32;x++) {
-			if(boardTilesS [y][x] == "w") {
-				g.drawImage(walls[level-1],x*25,(y+1)*25,this);
-			}
-				else if(boardTilesS [y][x] == "r")
-					g.drawImage(roads[0],x*25,(y+1)*25,this);
-				else if(boardTilesS [y][x] == "d" )
-					g.drawImage(roads[1],x*25,(y+1)*25,this);
-				else if(boardTilesS[y][x] == "g")
-					g.drawImage(gate,x*25,(y+1)*25,this);	
 
-			}
-		}	
-	}
- */
