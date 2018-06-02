@@ -21,7 +21,7 @@ public class NicePacman extends Pacman{
 		this.pacmanIcons[1] = new ImageIcon("pictures\\figures\\NicePacman\\right.png");
 		this.pacmanIcons[2] = new ImageIcon("pictures\\figures\\NicePacman\\up.png");
 		this.pacmanIcons[3] = new ImageIcon("pictures\\figures\\NicePacman\\down.png");
-		this.fullPac = new ImageIcon("pictures\\figures\\NicePacman\\fullPacman.png");
+		this.fullPac = new ImageIcon("pictures\\figures\\NicePacman\\fullPac.png");
 		this.currentPosition = initialPosition;
 		this.currentIcon = this.pacmanIcons[0];
 		this.dx = -5;

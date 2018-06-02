@@ -126,8 +126,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 
 	}
-	@Override
 	public void paint(Graphics g){
+		super.paint(g);
 		Image im = this.pacman.draw(this, g);
 		Pair position = this.pacman.getCurrentPosition();
 		g.drawImage(im,position.getX(), position.getY(), this);
