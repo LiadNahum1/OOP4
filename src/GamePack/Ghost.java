@@ -1,53 +1,84 @@
 package GamePack;
+import java.awt.Image;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Vector;
 
-public abstract class Ghost  implements Visitor {
-	protected Pair boardTileIn;
-	protected Pair chasePlace;
-	public Ghost(Pair inisialisPosition) {
-		this.boardTileIn = inisialisPosition;
+import javax.swing.ImageIcon;
+
+public abstract class Ghost  implements Visitor,ActionListener {
+	protected int TimeFromExit;
+	private Vector<String> [][] neighbors;
+	private Pair boardTileIn;
+	private Pair chasePlace;
+	private Pair pxIn;
+	private int speed;
+	private boolean isScared;
+	private String lastPos;
+	private HashMap <String,Image> position;
+	private Image currPosition;
+	
+	public Ghost(Pair pxIn, Pair chasePlace ,Pair boardTileIn, int speed  ,Vector<String> [][] neighbors ,String ghostColor) {
+	this.pxIn = pxIn;
+	this.chasePlace = chasePlace;
+	this.boardTileIn = boardTileIn;
+	this.speed = speed;
+	this.neighbors = neighbors;
+	this.TimeFromExit = 0;
+	updateDirsPic(ghostColor);
+	}
+	private void updateDirsPic(String ghostColor) { 
+		position = new HashMap<String ,Image>();
+	position.put("u", new ImageIcon("pictures/figures/" + ghostColor +"_u.png").getImage());
+	position.put("l", new ImageIcon("pictures/figures/" + ghostColor +"_l.png").getImage());
+	position.put("r", new ImageIcon("pictures/figures/" + ghostColor +"_r.png").getImage());
+	position.put("d", new ImageIcon("pictures/figures/" + ghostColor +"_d.png").getImage());
+	position.put("sceard", new ImageIcon("pictures/figures/scared.png").getImage());
 	}
 	public void collide(Pacman pacman) {
 		pacman.impact(this);
 	}
-	public void move(Vector<String> [][] neighbors) {
+	public void moveTile() {
 		String dir;
 		if(isScared) {
-			dir= findsScaredMove(neighbors);
+			dir= findsScaredMove();
 		}
 		else {
-			dir = findMoveDir(neighbors);
+			dir = findMoveDir();
 			this.currPosition = this.position.get(dir);
-		}
-		if(dir == "u")
-		{
-			dx = 0;
-			dy =3;
-		}
-		if(dir == "d")
-		{
-			dx = 0;
-			dy =-3;
-		}
-		if(dir == "l")
-		{
-			dx = 3;
-			dy =0;
-		}
-		if(dir == "r")
-		{
-			dx = -3;
-			dy = 0;
 		}
 		this.lastPos = dir;
 	}
+	public void move() {
+		
+		if(lastPos == "u")
+		{
+			pxIn.sumSetX(0);;
+			pxIn.sumSetY(speed);
+		}
+		if(lastPos == "d")
+		{
+			pxIn.sumSetX(0);;
+			pxIn.sumSetY(-speed);
+		}
+		if(lastPos == "l")
+		{
+			pxIn.sumSetX(speed);;
+			pxIn.sumSetY(0);
+	}
+		if(lastPos == "r")
+		{
+			pxIn.sumSetX(-speed);;
+			pxIn.sumSetY(0);
+		}
+	}
 
-	private String findsScaredMove(Vector<String>[][] neighbors) {
+	private String findsScaredMove() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private String findMoveDir(Vector<String> [][] neighbors) {
+	private String findMoveDir() {
 		Vector <String> posDirs =neighbors[this.boardTileIn.getX()][this.boardTileIn.getY()];
 
 		if(posDirs.size()==2 & posDirs.contains(this.lastPos))

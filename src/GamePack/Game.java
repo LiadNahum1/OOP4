@@ -27,6 +27,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 	private Vector<String> [][] neighbors;
 	private int level; 
 	private Pacman pacman;
+	private GreenGhost greenGhost;
+	private RedGhost redGhost;
+	private YellowGhost yellowGhost;
 	private boolean start; 
 	private Vector<Food> fruits; 
 	private RoadTile fruitsTile; 
@@ -39,7 +42,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		this.setLayout(new GridLayout(32,32));
 		this.setSize(800,800);
 		this.start = true; 
-		this.timer = new PacTimer(this);
+		this.timer = new PacTimer(this,greenGhost,redGhost,yellowGhost);
 		if(level == 1) {
 			this.pacman = new NicePacman(new Pair(400,400)); 
 		}
@@ -140,7 +143,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		if(e.getSource().equals(this.timer.getPacmanTimer())) {
 			this.pacman.move();
 			repaint();
-			
 		}
 		if(e.getSource().equals(this.timer.getFruitTimer())) {
 			if(this.timer.getNumTicksFruit() == 0) {

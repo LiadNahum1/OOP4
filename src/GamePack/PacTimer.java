@@ -8,18 +8,22 @@ public class PacTimer implements ActionListener {
 	private Timer gameTimer; // main timer of the game 
 	private Timer pacmanTimer; // timer that responsible for the movement of pacman
 	private Timer fruitTimer;
-	private Timer ghostsTimer;
+	private Timer greenGhostsTimer;
+	private Timer redGhostsTimer;
+	private Timer yellowGhostsTimer;
 	private int numTicksOfGame;
 	private int numTicksOfFruit;
 	private int speed;
 	
-	public PacTimer(ActionListener game) {
+	public PacTimer(ActionListener game , ActionListener greenGhost , ActionListener redGhost,ActionListener yellowGhost) {
 		this.gameTimer = new Timer(1000, game);
 		this.gameTimer.addActionListener(this);
 		this.pacmanTimer = new Timer(50, game);
 		this.fruitTimer = new Timer(500, game);
 		this.fruitTimer.addActionListener(this);
-		this.ghostsTimer = new Timer(1000,game);
+		this.setGreenGhostsTimer(new Timer(1000,greenGhost));
+		this.setGreenGhostsTimer(new Timer(1000,redGhost));
+		this.setGreenGhostsTimer(new Timer(1000,yellowGhost));
 		this.numTicksOfGame = 0; 
 		this.numTicksOfFruit = 0;
 		this.speed = 1;
@@ -44,6 +48,15 @@ public class PacTimer implements ActionListener {
 	public void start() {
 		this.gameTimer.start();
 		this.pacmanTimer.start();
+	}
+	public void  startYellowGhost() {
+		this.yellowGhostsTimer.start();
+	}
+	public void  startGreenGhost() {
+		this.yellowGhostsTimer.start();
+	}
+	public void  startRedGhost() {
+		this.yellowGhostsTimer.start();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -79,6 +92,29 @@ public class PacTimer implements ActionListener {
 		this.gameTimer.setDelay(1/speed*1000);
 		this.pacmanTimer.setDelay(1/speed*50);
 		this.fruitTimer.setDelay(1/speed*500);
-		this.ghostsTimer.setDelay(1/speed*1000);
+	}
+
+	public Timer getGreenGhostsTimer() {
+		return greenGhostsTimer;
+	}
+
+	public void setGreenGhostsTimer(Timer greenGhostsTimer) {
+		this.greenGhostsTimer = greenGhostsTimer;
+	}
+
+	public Timer getRedGhostsTimer() {
+		return redGhostsTimer;
+	}
+
+	public void setRedGhostsTimer(Timer redGhostsTimer) {
+		this.redGhostsTimer = redGhostsTimer;
+	}
+
+	public Timer getYellowGhostsTimer() {
+		return yellowGhostsTimer;
+	}
+
+	public void setYellowGhostsTimer(Timer yellowGhostsTimer) {
+		this.yellowGhostsTimer = yellowGhostsTimer;
 	}
 }
