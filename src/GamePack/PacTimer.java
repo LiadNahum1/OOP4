@@ -87,13 +87,11 @@ public class PacTimer implements ActionListener {
 		this.speed = speed;
 	updateGameSpeed();
 	}
-
 	private void updateGameSpeed() {
 		this.gameTimer.setDelay(1/speed*1000);
 		this.pacmanTimer.setDelay(1/speed*50);
 		this.fruitTimer.setDelay(1/speed*500);
 	}
-
 	public Timer getGreenGhostsTimer() {
 		return greenGhostsTimer;
 	}

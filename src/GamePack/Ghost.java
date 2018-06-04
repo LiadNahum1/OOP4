@@ -1,4 +1,6 @@
 package GamePack;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -99,9 +101,7 @@ public abstract class Ghost  implements Visitor,ActionListener {
 		else {
 			return posDirs.get(0);
 		}
-	}public abstract void visit(NicePacman pacman);
-	public abstract void visit(DefendedPacman pacman);
-	public abstract void visit(AngryPacman pacman);
+	}
 
 	public Pair getBoardTileIn() {
 		return boardTileIn;
@@ -109,5 +109,17 @@ public abstract class Ghost  implements Visitor,ActionListener {
 	public void setBoardTileIn(Pair currentPosition) {
 		this.boardTileIn = currentPosition;
 	}
+	public Image draw(Game game, Graphics g) {
+		ImageIcon im;
+		g.fillRect(position.getX() -this.dx, position.getY() - this.dy, 25 ,25 ); // erase the previous image 
+		Image offIm = game.createImage(25 , 25);
+		Graphics offGr = offIm.getGraphics();	
+		offGr.drawImage(im.getImage(), 0,0, game);
+		g.setColor(Color.black);
+		return offIm; 
+	}
+	public abstract void visit(NicePacman pacman);
+	public abstract void visit(DefendedPacman pacman);
+	public abstract void visit(AngryPacman pacman);
 
 }
