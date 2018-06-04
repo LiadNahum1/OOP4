@@ -16,7 +16,7 @@ public class PacTimer implements ActionListener {
 	public PacTimer(ActionListener game) {
 		this.gameTimer = new Timer(1000, game);
 		this.gameTimer.addActionListener(this);
-		this.pacmanTimer = new Timer(50, game);
+		this.pacmanTimer = new Timer(100, game);
 		this.fruitTimer = new Timer(500, game);
 		this.fruitTimer.addActionListener(this);
 		this.ghostsTimer = new Timer(1000,game);

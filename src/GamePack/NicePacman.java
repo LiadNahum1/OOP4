@@ -7,16 +7,21 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
+import Tiles.BoardTile;
+import Tiles.RoadTile;
+
 public class NicePacman extends Pacman{
 	private ImageIcon [] pacmanIcons;
 	private ImageIcon currentIcon;
 	private ImageIcon fullPac; 
 	private Pair currentPosition;
+	private Pair lastPosition;
 	private int dx;
 	private int dy; 
 	private boolean isFull;
-	
-	public NicePacman(Pair initialPosition) {
+	private BoardTile [][] board; 
+
+	public NicePacman(Pair initialPosition, BoardTile[][]board) {
 		this.pacmanIcons = new ImageIcon[5];
 		this.pacmanIcons[0] = new ImageIcon("pictures\\figures\\NicePacman\\left.png");
 		this.pacmanIcons[1] = new ImageIcon("pictures\\figures\\NicePacman\\right.png");
@@ -24,26 +29,43 @@ public class NicePacman extends Pacman{
 		this.pacmanIcons[3] = new ImageIcon("pictures\\figures\\NicePacman\\down.png");
 		this.fullPac = new ImageIcon("pictures\\figures\\NicePacman\\fullPac.png");
 		this.currentPosition = initialPosition;
+		this.lastPosition = new Pair(currentPosition.getX(), currentPosition.getY());
 		this.currentIcon = this.pacmanIcons[0];
 		this.dx = -5;
 		this.dy = 0; 
 		this.isFull = false; 
+		this.board = board; 
 
 	}
 	@Override
 	public void impact(Visitor v) {
 		v.visit(this);
-		}
-	
-	public void move() {
-		this.currentPosition.sumSetX(this.dx);
-		this.currentPosition.sumSetY(this.dy);
 	}
-	
+
+	public void move() {
+		if(checkIfCanMove()) {
+			this.lastPosition.setX(this.currentPosition.getX());
+			this.lastPosition.setY(this.currentPosition.getY());
+			this.currentPosition.sumSetX(this.dx);
+			this.currentPosition.sumSetY(this.dy);
+			
+		}
+	}
+	public boolean checkIfCanMove() {
+		int x = this.currentPosition.getX() + this.dx;
+		int y = this.currentPosition.getY() + this.dy;
+		x = x/25 - 2;
+		y = y/25 - 2;
+		if(this.board[x][y] instanceof RoadTile)
+			return false;
+		else
+			return true; 
+
+	}
 	public ImageIcon getCurrentIcon() {
 		return this.currentIcon;
 	}
-	
+
 	public Pair getCurrentPosition() {
 		return this.currentPosition;
 	}
@@ -70,9 +92,9 @@ public class NicePacman extends Pacman{
 		}
 		move();
 	}
-	
+
 	@Override
-	public Image draw(Game game, Graphics g) {
+	public void draw(Game game, Graphics g) {
 		ImageIcon im;
 		if(!isFull) {
 			im = getCurrentIcon();
@@ -82,12 +104,10 @@ public class NicePacman extends Pacman{
 			im = this.fullPac;
 			this.isFull = false;
 		}
-		Pair position = getCurrentPosition();
-		g.fillRect(position.getX() -this.dx, position.getY() - this.dy, 25 ,25 ); // erase the previous image 
+		g.fillRect(this.lastPosition.getX(), this.lastPosition.getY(), 25, 25);
 		Image offIm = game.createImage(25 , 25);
 		Graphics offGr = offIm.getGraphics();	
 		offGr.drawImage(im.getImage(), 0,0, game);
-		g.setColor(Color.black);
-		return offIm; 
+	    g.drawImage(offIm,this.currentPosition.getX(), this.currentPosition.getY(), game);
 	}
 }

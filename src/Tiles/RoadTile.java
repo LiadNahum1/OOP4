@@ -1,7 +1,10 @@
-package GamePack;
+package Tiles;
 import java.awt.Color;
+import java.awt.Image;
 
 import javax.swing.*;
+
+import Food.Food;
 
 
 public class RoadTile extends BoardTile {
@@ -11,9 +14,8 @@ public class RoadTile extends BoardTile {
 	private boolean dimmed; 
 	public RoadTile(Food food) {
 		super();
-		this.road = new ImageIcon("pictures/boards/road.png");
+		imageIcon = new ImageIcon("pictures/boards/road.png");
 		setFood(food);
-		this.setIcon(getCurrentImage());
 		this.dimmed = false; 
 	}
 
@@ -23,12 +25,15 @@ public class RoadTile extends BoardTile {
 	public void setIsSomethingOn(Food food) {
 		setFood(food);
 	}
+	public Image getImage() {
+		return getCurrentImage().getImage();
+	}
 	public ImageIcon getCurrentImage() {
 		if(getIsSomethingOn()) {
 			return this.food.getImage();
 		}
 		else
-			return this.road;
+			return imageIcon;
 	}
 	public void setFood(Food food) {
 		this.food = food; 
@@ -38,15 +43,12 @@ public class RoadTile extends BoardTile {
 		else {
 			this.isSomethingOn = true; 
 		}
-		this.setIcon(getCurrentImage());
 	}
 	public void dimElement() {
 		if(!this.dimmed) {
-			this.setIcon(this.road);
 			this.dimmed = true;
 		}
 		else {
-			this.setIcon(getCurrentImage());
 			this.dimmed = false; 
 		}
 	}

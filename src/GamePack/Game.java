@@ -14,6 +14,14 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import Food.Apple;
+import Food.Food;
+import Food.RegDot;
+import Tiles.BoardTile;
+import Tiles.GateTile;
+import Tiles.RoadTile;
+import Tiles.WallTile;
+
 public class Game extends JFrame implements ActionListener, KeyListener {
 	private BoardTile [][] boardTiles;
 	private String [][] boardTilesS; 
@@ -34,13 +42,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		this.setSize(800,800);
 		this.start = true; 
 		this.timer = new PacTimer(this);
-		if(level == 1) {
-			this.pacman = new NicePacman(new Pair(400,400)); 
-		}
+		
 		this.fruitsTile = new RoadTile(null);
 		initializeFruits();
 		initializeBoardTilesS();
 		initializeBoard();
+		if(level == 1) {
+			this.pacman = new NicePacman(new Pair(400,350),this.boardTiles); 
+		}
 		inisializeNeighborsMat();
 		this.addKeyListener(this);
 		this.setVisible(true);
@@ -87,7 +96,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		for(int i=0;i<32;i++){
 			for(int j=0;j<32;j++){
 				initializeBoardTile(i,j);
-				cp.add(boardTiles[i][j]);
 			}
 		}
 	}
@@ -181,11 +189,15 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
 	}
 	public void paint(Graphics g){
-		super.paint(g);
-		Image pacIm = this.pacman.draw(this, g);
-		Pair position = this.pacman.getCurrentPosition();
-	    g.drawImage(pacIm,position.getX(), position.getY(), this);
-	     
+		if(this.start) {
+			for(int i=0; i<this.boardTiles.length; i = i+1) {
+				for(int j=0; j<this.boardTiles.length; j =j+1) {
+					g.drawImage(this.boardTiles[i][j].getImage(), j*25, i*25, this);
+				}
+			}
+			start = false; 
+		}
+		this.pacman.draw(this, g);
 	}
 	public void initializeBoardTilesS() {
 		this.boardTilesS = new String[][] 

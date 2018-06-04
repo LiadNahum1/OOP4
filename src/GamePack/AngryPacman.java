@@ -36,8 +36,8 @@ public class AngryPacman extends Pacman {
 		
 	}
 	@Override
-	public Image draw(Game game, Graphics g) {
+	public void draw(Game game, Graphics g) {
 		// TODO Auto-generated method stub
-		return null;
+	
 	}
 }

@@ -15,7 +15,7 @@ public abstract class Pacman implements Visited{
 		// TODO Auto-generated method stub
 	}
 
-	public abstract Image draw(Game game, Graphics g);
+	public abstract void draw(Game game, Graphics g);
 	public abstract ImageIcon getCurrentIcon(); 
 	public abstract Pair getCurrentPosition();
 	public abstract void manageMovement(KeyEvent e);

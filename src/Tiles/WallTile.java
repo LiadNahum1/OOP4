@@ -1,4 +1,4 @@
-package GamePack;
+package Tiles;
 import javax.swing.ImageIcon;
 
 
@@ -11,7 +11,7 @@ public class WallTile extends BoardTile {
 public WallTile (int level){
     super();
     inisializePictures();
-    this.setIcon(pictures[level-1]);
+    imageIcon = pictures[level-1];
 }
     private void inisializePictures() {
     pictures = new ImageIcon[3];
