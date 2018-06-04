@@ -1,4 +1,5 @@
 package GamePack;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
@@ -7,11 +8,9 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 public class RedGhost extends Ghost {
-		public RedGhost(Pair inisialPxIn, Pair packmanPosition,Pair inisialPositionTile,Vector<String> [][] neighbors) {
-			super(inisialPxIn,packmanPosition , inisialPositionTile , 1 ,neighbors , "red");
+		public RedGhost(Pair inisialPxIn, Pair packmanPosition,Pair inisialPositionTile,Vector<String> [][] neighbors,Graphics g) {
+			super(inisialPxIn,packmanPosition , inisialPositionTile ,neighbors , "red", g);
 		}
-
-
 
 		@Override
 		public void visit(NicePacman pacman) {
@@ -31,13 +30,6 @@ public class RedGhost extends Ghost {
 			
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(this.TimeFromExit%5 == 0) {
-				this.moveTile();
-			}
-			move();
-			this.TimeFromExit++;
-		}
+		
 
 }

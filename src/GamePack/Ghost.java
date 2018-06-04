@@ -2,6 +2,7 @@ package GamePack;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Vector;
@@ -14,19 +15,19 @@ public abstract class Ghost  implements Visitor,ActionListener {
 	private Pair boardTileIn;
 	private Pair chasePlace;
 	private Pair pxIn;
-	private int speed;
 	private boolean isScared;
-	private String lastPos;
+	private String curPos;
 	private HashMap <String,Image> position;
-	private Image currPosition;
+	private Image currPositionIm;
+	private Graphics g;
 	
-	public Ghost(Pair pxIn, Pair chasePlace ,Pair boardTileIn, int speed  ,Vector<String> [][] neighbors ,String ghostColor) {
+	public Ghost(Pair pxIn, Pair chasePlace ,Pair boardTileIn,Vector<String> [][] neighbors ,String ghostColor ,Graphics g) {
 	this.pxIn = pxIn;
 	this.chasePlace = chasePlace;
 	this.boardTileIn = boardTileIn;
-	this.speed = speed;
 	this.neighbors = neighbors;
 	this.TimeFromExit = 0;
+	this.g =g;
 	updateDirsPic(ghostColor);
 	}
 	private void updateDirsPic(String ghostColor) { 
@@ -47,30 +48,30 @@ public abstract class Ghost  implements Visitor,ActionListener {
 		}
 		else {
 			dir = findMoveDir();
-			this.currPosition = this.position.get(dir);
+			this.currPositionIm = this.position.get(dir);
 		}
-		this.lastPos = dir;
+		this.curPos = dir;
 	}
 	public void move() {
 		
-		if(lastPos == "u")
+		if(curPos == "u")
 		{
 			pxIn.sumSetX(0);;
-			pxIn.sumSetY(speed);
+			pxIn.sumSetY(1);
 		}
-		if(lastPos == "d")
+		if(curPos == "d")
 		{
 			pxIn.sumSetX(0);;
-			pxIn.sumSetY(-speed);
+			pxIn.sumSetY(-1);
 		}
-		if(lastPos == "l")
+		if(curPos == "l")
 		{
-			pxIn.sumSetX(speed);;
+			pxIn.sumSetX(1);;
 			pxIn.sumSetY(0);
 	}
-		if(lastPos == "r")
+		if(curPos == "r")
 		{
-			pxIn.sumSetX(-speed);;
+			pxIn.sumSetX(-1);;
 			pxIn.sumSetY(0);
 		}
 	}
@@ -83,8 +84,8 @@ public abstract class Ghost  implements Visitor,ActionListener {
 	private String findMoveDir() {
 		Vector <String> posDirs =neighbors[this.boardTileIn.getX()][this.boardTileIn.getY()];
 
-		if(posDirs.size()==2 & posDirs.contains(this.lastPos))
-			return this.lastPos;
+		if(posDirs.size()==2 & posDirs.contains(this.curPos))
+			return this.curPos;
 		else
 			return bestNove(posDirs);
 	}
@@ -102,24 +103,27 @@ public abstract class Ghost  implements Visitor,ActionListener {
 			return posDirs.get(0);
 		}
 	}
-
+	public void actionPerformed(ActionEvent e) {
+		if(this.TimeFromExit%25 == 0) {
+			this.moveTile();
+		}
+		move();
+		this.TimeFromExit++;
+	}
+	
 	public Pair getBoardTileIn() {
 		return boardTileIn;
 	}
 	public void setBoardTileIn(Pair currentPosition) {
 		this.boardTileIn = currentPosition;
 	}
-	public Image draw(Game game, Graphics g) {
-		ImageIcon im;
-		g.fillRect(position.getX() -this.dx, position.getY() - this.dy, 25 ,25 ); // erase the previous image 
-		Image offIm = game.createImage(25 , 25);
-		Graphics offGr = offIm.getGraphics();	
-		offGr.drawImage(im.getImage(), 0,0, game);
-		g.setColor(Color.black);
-		return offIm; 
-	}
+/*	public Image draw(Game game) {
+		Image offIm1 = game.createImage(25 , 25); 
+		Graphics offGr = offIm1.getGraphics();	
+		offGr.drawImage(this.currPositionIm, 0,0, game);
+	    g.drawImage(offIm1,this.currentPositionIm, this.currentPosition.getY(), game);
 	public abstract void visit(NicePacman pacman);
 	public abstract void visit(DefendedPacman pacman);
 	public abstract void visit(AngryPacman pacman);
-
+*/
 }

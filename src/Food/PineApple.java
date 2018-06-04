@@ -1,4 +1,4 @@
-package FoodObjects;
+package Food;
 import javax.swing.ImageIcon;
 
 public class PineApple extends Food {

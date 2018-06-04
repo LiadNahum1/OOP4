@@ -12,9 +12,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JFrame;
-import javax.swing.Timer;
-
-import FoodObjects.*;
+import Food.*;
 import Tiles.BoardTile;
 import Tiles.GateTile;
 import Tiles.RoadTile;
@@ -51,8 +49,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		initializeBoardTilesS();
 		initializeBoard();
 		inisializeNeighborsMat();
+		InisializeGhosts();
 		this.addKeyListener(this);
 		this.setVisible(true);
+	}
+
+	private void InisializeGhosts() {
+		this.greenGhost = new GreenGhost(new Pair(400,400),pacman.getCurrentPosition(), new Pair(16,16), neighbors, null);
 	}
 
 	public void initializeFruits() {
@@ -75,10 +78,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 	private Vector<String> findneighbors(int curY,int curX) {
-		if(this.boardTilesS[curY][curX] == "w")
+		if(this.boardTilesS[curY][curX] == "w") 
 			return null;
 		else {
-			Vector <String> possibleDirs = new Vector <>();
+			Vector <String> possibleDirs = new Vector <>();//the frame of the board is all wals so there wont be problems of edged
 			if(this.boardTilesS[curY+1][curX]!="w") //can move up
 				possibleDirs.add("u");
 			if(this.boardTilesS[curY-1][curX]!="w")//can move down
@@ -140,7 +143,16 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(this.timer.getPacmanTimer())) {
+		if(e.getSource().equals(this.timer.getGameTimer())) {
+			if(this.timer.getNumTicksGame() == 7)
+				this.timer.getGreenGhostsTimer().start();
+			if(this.timer.getNumTicksGame() == 10)
+				this.timer.getRedGhostsTimer().start();
+			if(this.timer.getNumTicksGame() == 13)
+				this.timer.getYellowGhostsTimer().start();
+		}
+		
+			if(e.getSource().equals(this.timer.getPacmanTimer())) {
 			this.pacman.move();
 			repaint();
 		}

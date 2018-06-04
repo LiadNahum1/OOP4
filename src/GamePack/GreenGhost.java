@@ -1,17 +1,12 @@
 package GamePack;
-import java.awt.Image;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
-
 public class GreenGhost extends Ghost {
-	public GreenGhost(Pair inisialPxIn, Pair packmanPosition,Pair inisialPositionTile,Vector<String> [][] neighbors) {
-		super(inisialPxIn,packmanPosition , inisialPositionTile , 3 ,neighbors , "green");
+	public GreenGhost(Pair inisialPxIn, Pair packmanPosition,Pair inisialPositionTile,Vector<String>[][] neighbors, Graphics g) {
+		super(inisialPxIn,packmanPosition , inisialPositionTile , neighbors,"green",g);
 	}
-
-
 
 	@Override
 	public void visit(NicePacman pacman) {
@@ -31,13 +26,5 @@ public class GreenGhost extends Ghost {
 		
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(this.TimeFromExit%5 == 0) {
-			this.moveTile();
-		}
-		move();
-		this.TimeFromExit++;
-	}
 
 }

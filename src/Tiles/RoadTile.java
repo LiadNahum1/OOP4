@@ -3,7 +3,7 @@ import java.awt.Color;
 
 import javax.swing.*;
 
-import FoodObjects.*;
+import Food.*;
 
 public class RoadTile extends BoardTile {
 	private boolean isSomethingOn; 

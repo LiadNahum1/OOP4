@@ -1,10 +1,11 @@
 package GamePack;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.Vector;
 
 public class YellowGhost extends Ghost{
-	public YellowGhost(Pair pxIn, Pair chasePlace, Pair boardTileIn, Vector<String>[][] neighbors) {
-		super(pxIn, chasePlace, boardTileIn, 1, neighbors, "yellow");
+	public YellowGhost(Pair pxIn, Pair chasePlace, Pair boardTileIn, Vector<String>[][] neighbors ,Graphics g) {
+		super(pxIn, chasePlace, boardTileIn,neighbors, "yellow", g);
 	}
 
 		@Override
@@ -23,15 +24,6 @@ public class YellowGhost extends Ghost{
 		public void visit(AngryPacman pacman) {
 			// TODO Auto-generated method stub
 			
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(this.TimeFromExit%5 == 0) {
-				this.moveTile();
-			}
-			move();
-			this.TimeFromExit++;
 		}
 
 
