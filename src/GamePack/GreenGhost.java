@@ -25,10 +25,4 @@ public class GreenGhost extends Ghost {
 		// TODO Auto-generated method stub
 		
 	}
-
-<<<<<<< HEAD
-	
-=======
->>>>>>> ghosts
-
 }

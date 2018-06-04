@@ -11,7 +11,6 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
-
 import Food.*;
 import Tiles.BoardTile;
 import Tiles.GateTile;
@@ -25,6 +24,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 	private Vector<String> [][] neighbors;
 	private int level; 
 	private Pacman pacman;
+	private GreenGhost greenGhost;
+	private RedGhost redGhost;
+	private YellowGhost yellowGhost;
 	private boolean start; 
 	private Vector<Food> fruits; 
 	private RoadTile fruitsTile; 
@@ -37,8 +39,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		this.setSize(800,800);
 		
 		this.start = true; 
-		this.timer = new PacTimer(this);
-		
+		this.timer = new PacTimer(this,greenGhost,redGhost,yellowGhost);
 		this.fruitsTile = new RoadTile(null);
 		initializeFruits();
 		initializeBoardTilesS();
@@ -47,8 +48,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 			this.pacman = new NicePacman(new Pair(400,350),this.boardTiles); 
 		}
 		inisializeNeighborsMat();
+		InisializeGhosts();
 		this.addKeyListener(this);
 		this.setVisible(true);
+	}
+
+	private void InisializeGhosts() {
+		this.greenGhost = new GreenGhost(new Pair(400,400),pacman.getCurrentPosition(), new Pair(16,16), neighbors, null);
 	}
 
 	public void initializeFruits() {
@@ -72,10 +78,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 	private Vector<String> findneighbors(int curY,int curX) {
-		if(this.boardTilesS[curY][curX] == "w")
+		if(this.boardTilesS[curY][curX] == "w") 
 			return null;
 		else {
-			Vector <String> possibleDirs = new Vector <>();
+			Vector <String> possibleDirs = new Vector <>();//the frame of the board is all wals so there wont be problems of edged
 			if(this.boardTilesS[curY+1][curX]!="w") //can move up
 				possibleDirs.add("u");
 			if(this.boardTilesS[curY-1][curX]!="w")//can move down
@@ -135,10 +141,18 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(this.timer.getPacmanTimer())) {
+		if(e.getSource().equals(this.timer.getGameTimer())) {
+			if(this.timer.getNumTicksGame() == 7)
+				this.timer.getGreenGhostsTimer().start();
+			if(this.timer.getNumTicksGame() == 10)
+				this.timer.getRedGhostsTimer().start();
+			if(this.timer.getNumTicksGame() == 13)
+				this.timer.getYellowGhostsTimer().start();
+		}
+		
+			if(e.getSource().equals(this.timer.getPacmanTimer())) {
 			this.pacman.move();
 			repaint();
-			
 		}
 		if(e.getSource().equals(this.timer.getFruitTimer())) {
 			if(this.timer.getNumTicksFruit() == 0) {
