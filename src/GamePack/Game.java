@@ -24,7 +24,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 	private BoardTile [][] boardTiles;
 	private String [][] boardTilesS; 
 	private PacTimer timer;
-	private Vector<Pair> [][] neighbors;
+	private Vector<String> [][] neighbors;
 	private int level; 
 	private Pacman pacman;
 	private boolean start; 
@@ -64,26 +64,26 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 	}
 	@SuppressWarnings("unchecked")
 	private void inisializeNeighborsMat() {
-		neighbors=(Vector<Pair>[][]) new Vector[32][32];
+		neighbors=(Vector<String>[][]) new Vector[32][32];
 		for(int i=0;i<32;i++) {
 			for(int j=0;j<32;j++) {
 				neighbors[i][j]=findneighbors(i,j);
 			}
 		}
 	}
-	private Vector<Pair> findneighbors(int curY,int curX) {
+	private Vector<String> findneighbors(int curY,int curX) {
 		if(this.boardTilesS[curY][curX] == "w")
 			return null;
 		else {
-			Vector <Pair> possibleDirs = new Vector <>();
+			Vector <String> possibleDirs = new Vector <>();
 			if(this.boardTilesS[curY+1][curX]!="w") //can move up
-				possibleDirs.add(new Pair(curX,curY+1));
+				possibleDirs.add("u");
 			if(this.boardTilesS[curY-1][curX]!="w")//can move down
-				possibleDirs.add(new Pair(curX,curY-1));
+				possibleDirs.add("d");
 			if(this.boardTilesS[curY][curX+1]!="w")//can move right
-				possibleDirs.add(new Pair(curX+1,curY));
+				possibleDirs.add("r");
 			if(this.boardTilesS[curY][curX-1]!="w")//can move left
-				possibleDirs.add(new Pair(curX-1,curY));
+				possibleDirs.add("l");
 			return possibleDirs;
 		}
 	}
@@ -188,9 +188,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 	}
 	public void paint(Graphics g){
 		super.paint(g);
-		Image im = this.pacman.draw(this, g);
+		Image pacIm = this.pacman.draw(this, g);
 		Pair position = this.pacman.getCurrentPosition();
-		g.drawImage(im,position.getX(), position.getY(), this);
+	    g.drawImage(pacIm,position.getX(), position.getY(), this);
+	     
 	}
 	public void initializeBoardTilesS() {
 		this.boardTilesS = new String[][] 

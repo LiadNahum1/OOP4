@@ -2,31 +2,24 @@ package GamePack;
 import java.util.Vector;
 
 public abstract class Ghost  implements Visitor {
-	protected int curDir;
-	private Pair currentPosition;
+	protected Pair boardTileIn;
 	protected Pair chasePlace;
-	public Ghost(int x,int y ) {
-		this.currentPosition = new Pair(x,y);
-		this.curDir = 0;//up
+	public Ghost(Pair inisialisPosition) {
+		this.boardTileIn = inisialisPosition;
 	}
 	public void collide(Pacman pacman) {
 		pacman.impact(this);
 	}
-	public Pair move(String board [][]) {
-
-	return null;	
-
-	}
-	
+	public abstract void move(Vector<String>[][] neighbors);
 	public abstract void visit(NicePacman pacman);
 	public abstract void visit(DefendedPacman pacman);
 	public abstract void visit(AngryPacman pacman);
 
-	public Pair getCurrentPosition() {
-		return currentPosition;
+	public Pair getBoardTileIn() {
+		return boardTileIn;
 	}
-	public void setCurrentPosition(Pair currentPosition) {
-		this.currentPosition = currentPosition;
+	public void setBoardTileIn(Pair currentPosition) {
+		this.boardTileIn = currentPosition;
 	}
 
 }

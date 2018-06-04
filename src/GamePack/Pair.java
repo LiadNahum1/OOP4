@@ -22,10 +22,17 @@ public class Pair {
 	
 	/*setters*/
 	public int setX(int x) {
-		return this.x= this.x + x;
+		return this.x= x;
 	}
 	
 	public int setY(int y) {
+		return this.y = y;
+	}
+	public int sumSetX(int x) {
+		return this.x= this.x + x;
+	}
+	
+	public int sumSetY(int y) {
 		return this.y = this.y + y;
 	}
 	

@@ -36,9 +36,8 @@ public class NicePacman extends Pacman{
 		}
 	
 	public void move() {
-		this.currentPosition.setX(this.dx);
-		this.currentPosition.setY(this.dy);
-		
+		this.currentPosition.sumSetX(this.dx);
+		this.currentPosition.sumSetY(this.dy);
 	}
 	
 	public ImageIcon getCurrentIcon() {

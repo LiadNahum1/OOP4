@@ -8,8 +8,10 @@ public class PacTimer implements ActionListener {
 	private Timer gameTimer; // main timer of the game 
 	private Timer pacmanTimer; // timer that responsible for the movement of pacman
 	private Timer fruitTimer;
+	private Timer ghostsTimer;
 	private int numTicksOfGame;
-	private int numTicksOfFruit; 
+	private int numTicksOfFruit;
+	private int speed;
 	
 	public PacTimer(ActionListener game) {
 		this.gameTimer = new Timer(1000, game);
@@ -17,9 +19,10 @@ public class PacTimer implements ActionListener {
 		this.pacmanTimer = new Timer(50, game);
 		this.fruitTimer = new Timer(500, game);
 		this.fruitTimer.addActionListener(this);
+		this.ghostsTimer = new Timer(1000,game);
 		this.numTicksOfGame = 0; 
 		this.numTicksOfFruit = 0;
-		
+		this.speed = 1;
 	}
 
 	public Timer getGameTimer() {
@@ -61,5 +64,21 @@ public class PacTimer implements ActionListener {
 		if(this.numTicksOfFruit == 11) {
 			this.numTicksOfFruit = 0;
 		}
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	updateGameSpeed();
+	}
+
+	private void updateGameSpeed() {
+		this.gameTimer.setDelay(1/speed*1000);
+		this.pacmanTimer.setDelay(1/speed*50);
+		this.fruitTimer.setDelay(1/speed*500);
+		this.ghostsTimer.setDelay(1/speed*1000);
 	}
 }
