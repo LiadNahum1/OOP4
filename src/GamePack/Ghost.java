@@ -11,7 +11,7 @@ public abstract class Ghost  implements Visitor {
 		pacman.impact(this);
 	}
 	public void move(Vector<String> [][] neighbors) {
-		String dir;
+		/*String dir;
 		if(isScared) {
 			dir= findsScaredMove(neighbors);
 		}
@@ -39,7 +39,7 @@ public abstract class Ghost  implements Visitor {
 			dx = -3;
 			dy = 0;
 		}
-		this.lastPos = dir;
+		this.lastPos = dir;*/
 	}
 
 	private String findsScaredMove(Vector<String>[][] neighbors) {
@@ -50,10 +50,11 @@ public abstract class Ghost  implements Visitor {
 	private String findMoveDir(Vector<String> [][] neighbors) {
 		Vector <String> posDirs =neighbors[this.boardTileIn.getX()][this.boardTileIn.getY()];
 
-		if(posDirs.size()==2 & posDirs.contains(this.lastPos))
+		/*if(posDirs.size()==2 & posDirs.contains(this.lastPos))
 			return this.lastPos;
 		else
-			return bestNove(posDirs);
+			return bestNove(posDirs);*/
+		return "";
 	}
 
 	private String bestNove(Vector<String> posDirs) { //this ghost try to ambush pacman from the sides

@@ -14,12 +14,6 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import FoodObjects.*;
-import Tiles.BoardTile;
-import Tiles.GateTile;
-import Tiles.RoadTile;
-import Tiles.WallTile;
-
 public class Game extends JFrame implements ActionListener, KeyListener {
 	private BoardTile [][] boardTiles;
 	private String [][] boardTilesS; 

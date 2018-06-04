@@ -1,9 +1,8 @@
-package Tiles;
+package GamePack;
 import java.awt.Color;
 
 import javax.swing.*;
 
-import FoodObjects.*;
 
 public class RoadTile extends BoardTile {
 	private boolean isSomethingOn; 

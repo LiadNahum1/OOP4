@@ -1,4 +1,4 @@
-package Tiles;
+package GamePack;
 import javax.swing.JLabel;
 
 public abstract class BoardTile  extends JLabel{

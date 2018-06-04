@@ -1,4 +1,4 @@
-package FoodObjects;
+package GamePack;
 import javax.swing.ImageIcon;
 
 public class Apple extends Food{

@@ -47,6 +47,6 @@ public class GreenGhost extends Ghost {
 		
 	}
 
-	@Override
+	
 
 }
