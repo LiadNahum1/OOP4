@@ -20,6 +20,7 @@ public class NicePacman extends Pacman{
 	private int dy; 
 	private boolean isFull;
 	private BoardTile [][] board; 
+	private String direction; //"l", "r", "u","d"
 
 	public NicePacman(Pair initialPosition, BoardTile[][]board) {
 		this.pacmanIcons = new ImageIcon[5];
@@ -33,6 +34,7 @@ public class NicePacman extends Pacman{
 		this.currentIcon = this.pacmanIcons[0];
 		this.dx = -5;
 		this.dy = 0; 
+		this.direction = "l"; 
 		this.isFull = false; 
 		this.board = board; 
 
@@ -48,18 +50,28 @@ public class NicePacman extends Pacman{
 			this.lastPosition.setY(this.currentPosition.getY());
 			this.currentPosition.sumSetX(this.dx);
 			this.currentPosition.sumSetY(this.dy);
-			
 		}
+
 	}
 	public boolean checkIfCanMove() {
 		int x = this.currentPosition.getX() + this.dx;
 		int y = this.currentPosition.getY() + this.dy;
-		x = x/25 - 2;
-		y = y/25 - 2;
-		if(this.board[x][y] instanceof RoadTile)
+		if(this.direction.equals("l")|this.direction.equals("u")) {
+			x = x/25;
+			y = y/25;
+		}
+		else if(this.direction.equals("r")) {
+			x = (x+25)/25;
+			y = y/25;
+		}
+		else { //d 
+			x = x/25;
+			y = (y+25)/25;
+		}
+		if(this.board[y][x] instanceof RoadTile)
+			return true;
+		else 
 			return false;
-		else
-			return true; 
 
 	}
 	public ImageIcon getCurrentIcon() {
@@ -73,21 +85,25 @@ public class NicePacman extends Pacman{
 		if(e.getKeyCode()== KeyEvent.VK_LEFT) {
 			this.dx = -5;
 			this.dy= 0;
+			this.direction = "l";
 			this.currentIcon = this.pacmanIcons[0];
 		}
 		if(e.getKeyCode()== KeyEvent.VK_RIGHT) {
 			this.dx = 5;
 			this.dy= 0;
+			this.direction = "r";
 			this.currentIcon = this.pacmanIcons[1];
 		}
 		if(e.getKeyCode()== KeyEvent.VK_UP) {
 			this.dx = 0;
 			this.dy= -5;
+			this.direction = "u";
 			this.currentIcon = this.pacmanIcons[2];
 		}
 		if(e.getKeyCode()== KeyEvent.VK_DOWN) {
 			this.dx = 0;
 			this.dy= 5;
+			this.direction = "d";
 			this.currentIcon = this.pacmanIcons[3];
 		}
 		move();
@@ -108,6 +124,6 @@ public class NicePacman extends Pacman{
 		Image offIm = game.createImage(25 , 25);
 		Graphics offGr = offIm.getGraphics();	
 		offGr.drawImage(im.getImage(), 0,0, game);
-	    g.drawImage(offIm,this.currentPosition.getX(), this.currentPosition.getY(), game);
+		g.drawImage(offIm,this.currentPosition.getX(), this.currentPosition.getY(), game);
 	}
 }

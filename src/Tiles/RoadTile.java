@@ -4,8 +4,7 @@ import java.awt.Image;
 
 import javax.swing.*;
 
-import Food.Food;
-
+import Food.*;
 
 public class RoadTile extends BoardTile {
 	private boolean isSomethingOn; 

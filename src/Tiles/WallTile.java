@@ -11,7 +11,7 @@ public class WallTile extends BoardTile {
 public WallTile (int level){
     super();
     inisializePictures();
-    imageIcon = pictures[level-1];
+    imageIcon = pictures[level-1]; 
 }
     private void inisializePictures() {
     pictures = new ImageIcon[3];

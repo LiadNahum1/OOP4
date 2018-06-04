@@ -2,8 +2,6 @@ package GamePack;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,11 +10,9 @@ import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JFrame;
-import javax.swing.Timer;
 
-import Food.Apple;
-import Food.Food;
-import Food.RegDot;
+
+import Food.*;
 import Tiles.BoardTile;
 import Tiles.GateTile;
 import Tiles.RoadTile;
@@ -38,8 +34,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.level = level; 
 		this.setBackground(Color.BLACK);
-		this.setLayout(new GridLayout(32,32));
 		this.setSize(800,800);
+		
 		this.start = true; 
 		this.timer = new PacTimer(this);
 		
@@ -71,6 +67,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		for(int i=0;i<32;i++) {
 			for(int j=0;j<32;j++) {
 				neighbors[i][j]=findneighbors(i,j);
+				
 			}
 		}
 	}
@@ -91,7 +88,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 	private void initializeBoard() {
-		Container cp= this.getContentPane();
 		this.boardTiles = new BoardTile [32][32];  
 		for(int i=0;i<32;i++){
 			for(int j=0;j<32;j++){
